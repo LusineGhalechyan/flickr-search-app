@@ -1,33 +1,67 @@
-import logo from "./logo.svg";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
 import axios from "axios";
-//import Flickr from "flickr-sdk";
-const s = () => {
-  axios
-    .get(
-      "https://www.flickr.com/services/rest/?method=flickr.photos.search&tags=cat,dog&api_key=ea1822c1928d8a968205c47a5e660d5a"
-    )
-    .then((res) => console.log(res.data));
-};
-function App() {
+import { baseURL } from "./constants/baseURL";
+import { apiKey, photosMethod } from "./constants/apiDetails";
+import SearchBox from "./components/SearchBox/SearchBox";
+import Card from "./components/Card/Card";
+
+const App = () => {
+  const [search, setSearch] = useState("");
+  const [list, setList] = useState([]);
+
+  const handleChange = (e) => setSearch(e.target.value);
+
+  const handleOnKeyDown = (e) => {
+    if (search && e.key === `Enter`) {
+      e.preventDefault();
+      fetchImages();
+    }
+  };
+
+  const fetchImages = async () => {
+    try {
+      const result = await axios.get(
+        `${baseURL}method=${photosMethod}&tags=${search.replace(
+          " ",
+          ","
+        )}&api_key=${apiKey}&per_page=5&page=1`
+      );
+      setSearch("");
+
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(result.data.toString(), "text/xml");
+      Array.from(doc.getElementsByTagName("photo")).forEach((e) => {
+        list.push({
+          id: e.attributes["id"].value,
+          serverId: e.attributes["server"].value,
+          secretId: e.attributes["secret"].value,
+        });
+      });
+      setList(list);
+    } catch (e) {
+      console.log(`error`, e);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {s()}
-        </a>
-      </header>
+    <div>
+      <SearchBox
+        value={search}
+        onChange={handleChange}
+        onKeyDown={handleOnKeyDown}
+        onSubmit={fetchImages}
+      />
+      {list.map((image, index) => (
+        <Card
+          key={index}
+          imgSrc={`https://live.staticflickr.com/${image.serverId}/${image.id}_${image.secretId}_s.jpg
+          `}
+        />
+      ))}
     </div>
   );
-}
+};
 
 export default App;
