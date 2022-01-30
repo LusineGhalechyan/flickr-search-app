@@ -1,5 +1,4 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import axios from "axios";
 import { baseURL } from "./constants/baseURL";
@@ -45,6 +44,10 @@ const App = () => {
     }
   };
 
+  const dropImg = (id) => {
+    console.log(`DROP_IMG_ID`, id);
+  };
+
   return (
     <div>
       <SearchBox
@@ -58,6 +61,8 @@ const App = () => {
           key={index}
           imgSrc={`https://live.staticflickr.com/${image.serverId}/${image.id}_${image.secretId}_s.jpg
           `}
+          handleDrop={() => dropImg(image.id)}
+          image={image}
         />
       ))}
     </div>
