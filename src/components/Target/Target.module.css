@@ -1,0 +1,13 @@
+.targetContainer {
+  align-items: center;
+  display: flex;
+}
+.targetBox {
+  width: 300px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 30px;
+  border: 2px dotted blue;
+}
