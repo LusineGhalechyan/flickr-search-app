@@ -3,14 +3,10 @@ import { DragSource } from "react-dnd";
 
 const imgSource = {
   beginDrag(props) {
-    console.log("_BEGIN_DRAG_props", props);
-    // return props;
-    return { id: props.image.id };
+    return props;
+    // return { id: props.image.id };
   },
   endDrag(props, monitor, component) {
-    console.log(`end_Drag_props`, props.image.id);
-    // console.log(`monitor.getDropResult()`, monitor.getDropResult());
-    // console.log(`props.handleDrop`, props.handleDrop(props.image.id));
     if (!monitor.didDrop()) {
       return;
     }

@@ -1,5 +1,5 @@
-import "./App.css";
-import { useEffect, useState } from "react";
+import styles from "./App.module.css";
+import { useState } from "react";
 import axios from "axios";
 import { baseURL } from "./constants/baseURL";
 import { apiKey, photosMethod } from "./constants/apiDetails";
@@ -18,7 +18,6 @@ const App = () => {
       e.preventDefault();
       fetchImages();
       const splittedInputValue = [...search.split(" ")];
-      console.log("splittedInputValue", splittedInputValue);
       setInputValue(splittedInputValue);
     }
   };
@@ -52,8 +51,9 @@ const App = () => {
     }
   };
 
-  const dropImg = (id) => {
-    console.log(`DROP_IMG_ID`, id);
+  const removeDraggedImg = (id) => {
+    const filteredList = list.filter((item) => item.id != id);
+    setList(filteredList);
   };
 
   return (
@@ -69,13 +69,15 @@ const App = () => {
           key={index}
           imgSrc={`https://live.staticflickr.com/${image.serverId}/${image.id}_${image.secretId}_s.jpg
           `}
-          handleDrop={() => dropImg(image.id)}
+          handleDrop={() => removeDraggedImg(image.id)}
           image={image}
         />
       ))}
-      {inputValue.map((target, index) => (
-        <Target key={index}>{target}</Target>
-      ))}
+      <div className={styles.targetContainer}>
+        {inputValue.map((target, index) => (
+          <Target key={index}>{target}</Target>
+        ))}
+      </div>
     </div>
   );
 };

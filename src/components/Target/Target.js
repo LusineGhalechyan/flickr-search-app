@@ -1,19 +1,40 @@
 import styles from "./Target.module.css";
 import { DropTarget } from "react-dnd";
+import { useEffect, useState } from "react";
 
 function collect(connect, monitor) {
+  let item = monitor.getItem();
+
   return {
     connectDropTarget: connect.dropTarget(),
     hovered: monitor.isOver(),
-    item: monitor.getItem(),
+    item,
+    isDragging: !!item,
   };
 }
 
 const Target = (props) => {
-  const { connectDropTarget, hovered, item } = props;
-  return (
-    <div className={styles.targetContainer}>
-      <div className={styles.targetBox}>{props.children}</div>
+  const [draggedItem, setDraggedItem] = useState([]);
+  const { connectDropTarget, hovered, item, isDragging } = props;
+  const [_isDragging, setIsDragging] = useState(isDragging);
+
+  const backgroundColor = hovered ? "#ccffff" : "#66ccff";
+
+  useEffect(() => {
+    if (isDragging) {
+      const itemContains = draggedItem.find(
+        (i) => i.image.id === item.image.id
+      );
+      if (!itemContains) {
+        draggedItem.push(item);
+        setDraggedItem(draggedItem);
+      }
+    }
+  });
+
+  return connectDropTarget(
+    <div className={styles.targetBox} style={{ background: backgroundColor }}>
+      {props.children}
     </div>
   );
 };
