@@ -17,7 +17,7 @@ const App = () => {
     if (search && e.key === `Enter`) {
       e.preventDefault();
       fetchImages();
-      const splittedInputValue = [...search.split(" ")];
+      const splittedInputValue = [...search.split(" ").filter((e) => e !== "")];
       setInputValue(splittedInputValue);
     }
   };

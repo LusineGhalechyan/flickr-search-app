@@ -16,7 +16,6 @@ function collect(connect, monitor) {
 const Target = (props) => {
   const [draggedItem, setDraggedItem] = useState([]);
   const { connectDropTarget, hovered, item, isDragging } = props;
-  const [_isDragging, setIsDragging] = useState(isDragging);
 
   const backgroundColor = hovered ? "#ccffff" : "#66ccff";
 
