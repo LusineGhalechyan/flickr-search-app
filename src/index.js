@@ -6,14 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-// import { DragDropContext } from "react-dnd";
-// import { DragSource } from "react-dnd";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
-      <App />
-    </DndProvider>
+    <Provider store={store}>
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

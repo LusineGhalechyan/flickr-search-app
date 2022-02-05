@@ -4,7 +4,6 @@ import { DragSource } from "react-dnd";
 const imgSource = {
   beginDrag(props) {
     return props;
-    // return { id: props.image.id };
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
