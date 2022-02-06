@@ -2,6 +2,7 @@ import * as actions from "./actionTypes";
 
 const initialState = {
   list: [],
+  droppedImgList: [],
 };
 
 const imgReducer = (state = initialState, action) => {
@@ -17,6 +18,7 @@ const imgReducer = (state = initialState, action) => {
             id: e.attributes["id"].value,
             serverId: e.attributes["server"].value,
             secretId: e.attributes["secret"].value,
+            category: null,
           });
         }
       );
@@ -27,12 +29,28 @@ const imgReducer = (state = initialState, action) => {
     }
     case actions.DROP_IMAGES: {
       let list = [...state.list];
-      const isDroppedImgExists = (img) => img.id != action.payload.imgId;
-      const droppedList = list.filter(isDroppedImgExists);
+      const isDroppingImgExists = (img) => img.id != action.payload.imgId;
+      const droppingList = list.filter(isDroppingImgExists);
 
       return {
         ...state,
-        list: [...droppedList],
+        list: [...droppingList],
+      };
+    }
+    case actions.FETCH_DROP_IMAGES: {
+      console.log(`DROPPED_LIST`, action.payload.droppedImgList);
+      const droppedImgList = action.payload.droppedImgList;
+      return {
+        ...state,
+        droppedImgList: [...droppedImgList],
+      };
+    }
+    case actions.SUBMIT_FORM: {
+      // const droppedImgList = [...state.droppedImgList];
+      // if (action.payload.isFormSubmitted) droppedImgList.length = 0;
+      return {
+        ...state,
+        droppedImgList: [],
       };
     }
     default:

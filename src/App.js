@@ -1,16 +1,19 @@
 import styles from "./App.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBox from "./components/SearchBox/SearchBox";
 import Card from "./components/Card/Card";
 import Target from "./components/Target/Target";
-import { dropImages, fetchImages } from "./redux/actions";
+import { dropImages, fetchImages, formSubmitted } from "./redux/actions";
 import { useSelector, useDispatch } from "react-redux";
+import DroppedImgContainer from "./components/DroppedImgContainer/DroppedImgContainer";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
   let [inputValue, setInputValue] = useState([]);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
   const imgList = useSelector((state) => state.image.list);
 
   const handleChange = (e) => setSearch(e.target.value);
@@ -20,6 +23,7 @@ const App = () => {
       dispatch(fetchImages(search));
       const splittedInputValue = [...search.split(" ").filter((e) => e !== "")];
       setInputValue(splittedInputValue);
+      setIsFormSubmitted(true);
     }
   };
 
@@ -42,9 +46,16 @@ const App = () => {
       ))}
       <div className={styles.targetContainer}>
         {inputValue.map((target, index) => (
-          <Target key={index}>{target}</Target>
+          <Target
+            key={index}
+            id={index}
+            customClickEvent={() => setIsFormSubmitted(false)}
+          >
+            {target}
+          </Target>
         ))}
       </div>
+      <DroppedImgContainer isFormSubmitted={isFormSubmitted} />
     </div>
   );
 };

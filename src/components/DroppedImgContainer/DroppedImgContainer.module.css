@@ -1,0 +1,8 @@
+.droppedImgContainer {
+  align-items: center;
+  margin: 7px;
+}
+
+.droppedImgContainer img {
+  margin: 2px;
+}

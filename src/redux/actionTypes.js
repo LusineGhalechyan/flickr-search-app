@@ -1,2 +1,4 @@
 export const FETCH_IMAGES = `FETCH_IMAGES`;
 export const DROP_IMAGES = `DROP_IMAGES`;
+export const FETCH_DROP_IMAGES = `FETCH_DROP_IMAGES`;
+export const SUBMIT_FORM = `SUBMIT_FORM`;
