@@ -38,7 +38,6 @@ const imgReducer = (state = initialState, action) => {
       };
     }
     case actions.FETCH_DROP_IMAGES: {
-      console.log(`DROPPED_LIST`, action.payload.droppedImgList);
       const droppedImgList = action.payload.droppedImgList;
       return {
         ...state,
@@ -46,11 +45,15 @@ const imgReducer = (state = initialState, action) => {
       };
     }
     case actions.SUBMIT_FORM: {
-      // const droppedImgList = [...state.droppedImgList];
-      // if (action.payload.isFormSubmitted) droppedImgList.length = 0;
       return {
         ...state,
         droppedImgList: [],
+      };
+    }
+    case actions.CLICKED_TARGET: {
+      return {
+        ...state,
+        target: action.payload.target,
       };
     }
     default:

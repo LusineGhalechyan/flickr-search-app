@@ -28,16 +28,17 @@ export const fetchImages = (searchValue) => async (dispatch) => {
 };
 
 export const dropImages = (imgId) => async (dispatch) => {
-  console.log(`DISPATCH_IMG_ID`, imgId);
   dispatch({ type: actions.DROP_IMAGES, payload: { imgId } });
 };
 
 export const fetchDropImages = (droppedImgList) => async (dispatch) => {
-  console.log(`droppedImgList`, droppedImgList);
   dispatch({ type: actions.FETCH_DROP_IMAGES, payload: { droppedImgList } });
 };
 
 export const formSubmitted = (isFormSubmitted) => async (dispatch) => {
-  console.log(`isFormSubmitted******`, isFormSubmitted);
   dispatch({ type: actions.SUBMIT_FORM, payload: { isFormSubmitted } });
+};
+
+export const clickedTarget = (target) => async (dispatch) => {
+  dispatch({ type: actions.CLICKED_TARGET, payload: { target } });
 };

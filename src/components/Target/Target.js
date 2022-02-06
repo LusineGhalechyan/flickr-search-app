@@ -1,7 +1,7 @@
 import styles from "./Target.module.css";
 import { DropTarget } from "react-dnd";
 import { useEffect, useState } from "react";
-import { fetchDropImages } from "../../redux/actions";
+import { clickedTarget, fetchDropImages } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 function collect(connect, monitor) {
@@ -29,18 +29,25 @@ const Target = (props) => {
         (i) => i.image.id === item.image.id
       );
       if (!itemContains) {
+        item.image.category = props.target;
         draggedItem.push(item);
         dispatch(fetchDropImages(draggedItem));
       }
     }
   });
+  const handleClick = () => {
+    dispatch(clickedTarget(props.target));
+    props.customClickEvent();
+  };
 
-  console.log(`draggedItem`, draggedItem);
+  useEffect(() => {
+    if (props.isFormSubmitted) setDraggedItem([]);
+  }, [props.isFormSubmitted]);
 
   return connectDropTarget(
     <div
       className={styles.targetBox}
-      onClick={props.customClickEvent}
+      onClick={handleClick}
       style={{ background: backgroundColor }}
     >
       {props.children}

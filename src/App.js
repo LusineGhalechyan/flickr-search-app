@@ -49,7 +49,9 @@ const App = () => {
           <Target
             key={index}
             id={index}
+            target={target}
             customClickEvent={() => setIsFormSubmitted(false)}
+            isFormSubmitted={isFormSubmitted}
           >
             {target}
           </Target>

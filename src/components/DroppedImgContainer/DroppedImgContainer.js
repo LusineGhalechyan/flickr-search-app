@@ -1,16 +1,11 @@
 import styles from "./DroppedImgContainer.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { formSubmitted } from "../../redux/actions";
+import { useSelector } from "react-redux";
 
 const DroppedImgContainer = ({ isFormSubmitted }) => {
-  const dispatch = useDispatch();
-  let droppedImgList = useSelector((state) => state.image.droppedImgList);
-  console.log(`droppedImgList***********`, droppedImgList);
-
-  useEffect(() => {
-    if (isFormSubmitted) dispatch(formSubmitted(isFormSubmitted));
-  }, [isFormSubmitted]);
+  let target = useSelector((state) => state.image.target);
+  let droppedImgList = useSelector(
+    (state) => state.image.droppedImgList
+  ).filter((e) => e.image.category === target);
 
   return (
     <div className={styles.droppedImgContainer}>
