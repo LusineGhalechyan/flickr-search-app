@@ -26,3 +26,8 @@ export const fetchImages = (search) => async (dispatch) => {
     console.log(`error`, e);
   }
 };
+
+export const dropImages = (imgId) => async (dispatch) => {
+  console.log(`DISPATCH_IMG_ID`, imgId);
+  dispatch({ type: actions.DROP_IMAGES, payload: { imgId } });
+};

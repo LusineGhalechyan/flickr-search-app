@@ -25,6 +25,16 @@ const imgReducer = (state = initialState, action) => {
         list: [...state.list],
       };
     }
+    case actions.DROP_IMAGES: {
+      let list = [...state.list];
+      const isDroppedImgExists = (img) => img.id != action.payload.imgId;
+      const droppedList = list.filter(isDroppedImgExists);
+
+      return {
+        ...state,
+        list: [...droppedList],
+      };
+    }
     default:
       return state;
   }

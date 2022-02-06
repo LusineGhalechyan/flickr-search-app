@@ -3,15 +3,15 @@ import { useState } from "react";
 import SearchBox from "./components/SearchBox/SearchBox";
 import Card from "./components/Card/Card";
 import Target from "./components/Target/Target";
-import { fetchImages } from "./redux/actions";
+import { dropImages, fetchImages } from "./redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState("");
   let [inputValue, setInputValue] = useState([]);
-  const dispatch = useDispatch();
   const imgList = useSelector((state) => state.image.list);
-  const [_imgList, setList] = useState(imgList);
 
   const handleChange = (e) => setSearch(e.target.value);
   const handleOnKeyDown = (e) => {
@@ -21,11 +21,6 @@ const App = () => {
       const splittedInputValue = [...search.split(" ").filter((e) => e !== "")];
       setInputValue(splittedInputValue);
     }
-  };
-
-  const removeDraggedImg = (id) => {
-    const filteredList = imgList.filter((item) => item.id != id);
-    setList(filteredList);
   };
 
   return (
@@ -41,7 +36,7 @@ const App = () => {
           key={index}
           imgSrc={`https://live.staticflickr.com/${image.serverId}/${image.id}_${image.secretId}_s.jpg
           `}
-          handleDrop={() => removeDraggedImg(image.id)}
+          handleDrop={() => dispatch(dropImages(image.id))}
           image={image}
         />
       ))}
